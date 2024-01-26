@@ -1,7 +1,22 @@
 # Prologue by Fruit-Bat
 This is a wonderful game and I wanted to play it on my Pi 5.
+I forked it to try and fix some rendering artefacts, in particular gaps in the landscape and a bar down the right-hand side of the screen.
 
-I forked this project to try and fix some rendering artefacts, in particular gaps in the landscape and a bar down the right-hand side of the screen.
+<table>
+	<tr>
+		<td><img src="./screen_shots/hurrican_poke.png" /></td>
+		<td><img src="./screen_shots/hurrican_menu_1.png" /></td>
+	</tr>
+	<tr>
+		<td><img src="./screen_shots/hurrican_intro_1.png" /></td>
+		<td><img src="./screen_shots/hurrican_intro_2.png" /></td>
+	</tr>
+	<tr>
+		<td><img src="./screen_shots/hurrican_gameplay_5.png" /></td>
+		<td><img src="./screen_shots/hurrican_gameplay_3.png" /></td>
+	</tr>	
+</table>
+
 
 ## Build instructions
 ```
