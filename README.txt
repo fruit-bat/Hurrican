@@ -1,3 +1,24 @@
+# Prologue
+This is a wonderful game, and I wanted to play it on my Pi 5.
+
+I forked this project to try and fix some rendering artefacts, in particular gaps in the landscape and a bar down the right-hand side of the screen.
+
+## Build instructions
+```
+sudo apt install libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libmodplug-dev libgles-dev
+git clone https://github.com/fruit-bat/Hurrican
+cd Hurrican/Hurrican/src
+make TARGET=linux_GL2
+cd ..
+./hurricanlinux
+```
+
+Have fun,
+
+--- Fruit-Bat ---
+
+# Readme
+
 Hi guys,
 
 I decided to release the sourcecode for Hurrican and its level editor to the public today, along with all the assets that the game contains.
