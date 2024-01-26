@@ -18,7 +18,7 @@ Have fun,
 --- Fruit-Bat ---
 
 # Readme by Poke53280
-
+```
 Hi guys,
 
 I decided to release the sourcecode for Hurrican and its level editor to the public today, along with all the assets that the game contains.
@@ -78,3 +78,4 @@ Definitions:
  Pickle (pickle136@gmail.com)
 
 Note: For cross-platform file/directory handling, the SDL port makes use of the cross-platform 'tinydir' library. Much thanks to Cong Xu, the author. https://github.com/cxong/tinydir Copyright (c) 2013, Cong Xu  - Simplified BSD License.
+```
