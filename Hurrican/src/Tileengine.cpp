@@ -37,6 +37,16 @@
 #include "unrarlib.h"
 #endif
 
+#define SKL(X) ((X) - POS_COORD_OFFSET)
+#define SKO(X) ((X) - POS_COORD_OFFSET)
+#define SKR(X) ((X) + TILESIZE_X + POS_COORD_OFFSET)
+#define SKU(Y) ((Y) + TILESIZE_Y + POS_COORD_OFFSET)
+
+#define TKL(X) (((X) + POS_COORD_OFFSET) * (1.0f / TILESETSIZE_X))
+#define TKR(X) (((X) - POS_COORD_OFFSET) * (1.0f / TILESETSIZE_X))
+#define TKO(Y) (((Y) + POS_COORD_OFFSET) * (1.0f / TILESETSIZE_Y))
+#define TKU(Y) (((Y) - POS_COORD_OFFSET) * (1.0f / TILESETSIZE_Y))
+
 // --------------------------------------------------------------------------------------
 // externe Variablen
 // --------------------------------------------------------------------------------------
@@ -1193,21 +1203,16 @@ void TileEngineClass::DrawBackLevel(void)
                 Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
-                l = xScreen   ;						// Links
-                o = yScreen   ;						// Oben
-                r = xScreen+TILESIZE_X - 1;						// Rechts
-                u = yScreen+TILESIZE_Y - 1;						// Unten
-
-                l -= POS_COORD_OFFSET;
-                r += POS_COORD_OFFSET;
-                o -= POS_COORD_OFFSET;
-                u += POS_COORD_OFFSET;
+                l = SKL(xScreen);						// Links
+                o = SKO(yScreen);						// Oben
+                r = SKR(xScreen);                		// Rechts
+                u = SKU(yScreen);	               		// Unten
 
                 // Textur-Koordinaten
-                tl = Rect.left  /TILESETSIZE_X;				// Links
-                tr = Rect.right /TILESETSIZE_X;				// Rechts
-                to = Rect.top   /TILESETSIZE_Y;				// Oben
-                tu = Rect.bottom/TILESETSIZE_Y;				// Unten
+                tl = TKL(Rect.left);			    	// Links
+                tr = TKR(Rect.right);		    		// Rechts
+                to = TKO(Rect.top);	        			// Oben
+                tu = TKU(Rect.bottom);		    		// Unten
 
                 // Vertices definieren
                 v1.color = TileAt(xLevel+i, yLevel+j).Color [0];
@@ -1370,21 +1375,16 @@ void TileEngineClass::DrawFrontLevel(void)
                 Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
-                l = xScreen   ;						// Links
-                o = yScreen   ;						// Oben
-                r = xScreen+TILESIZE_X - 1;						// Rechts
-                u = yScreen+TILESIZE_Y - 1;						// Unten
-
-                l -= POS_COORD_OFFSET;
-                r += POS_COORD_OFFSET;
-                o -= POS_COORD_OFFSET;
-                u += POS_COORD_OFFSET;
+                l = SKL(xScreen);						// Links
+                o = SKO(yScreen);						// Oben
+                r = SKR(xScreen);   		            // Rechts
+                u = SKU(yScreen);		            	// Unten
 
                 // Textur-Koordinaten
-                tl = Rect.left  /TILESETSIZE_X;				// Links
-                tr = Rect.right /TILESETSIZE_X;				// Rechts
-                to = Rect.top   /TILESETSIZE_Y;				// Oben
-                tu = Rect.bottom/TILESETSIZE_Y;				// Unten
+                tl = TKL(Rect.left);			    	// Links
+                tr = TKR(Rect.right);		    		// Rechts
+                to = TKO(Rect.top);	        			// Oben
+                tu = TKU(Rect.bottom);		    		// Unten
 
                 // Licht setzen (prüfen auf Overlay light, wegen hellen Kanten)
                 if (TileAt(xLevel+i, yLevel+j).Block & BLOCKWERT_OVERLAY_LIGHT)
@@ -1575,21 +1575,16 @@ void TileEngineClass::DrawBackLevelOverlay (void)
                 Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
-                l = xScreen   ;						// Links
-                o = yScreen   ;						// Oben
-                r = xScreen+TILESIZE_X - 1;						// Rechts
-                u = yScreen+TILESIZE_Y - 1;						// Unten
-
-                l -= POS_COORD_OFFSET;
-                r += POS_COORD_OFFSET;
-                o -= POS_COORD_OFFSET;
-                u += POS_COORD_OFFSET;
+                l = SKL(xScreen);						// Links
+                o = SKO(yScreen);						// Oben
+                r = SKR(xScreen);               		// Rechts
+                u = SKU(yScreen);		            	// Unten
 
                 // Textur-Koordinaten
-                tl = Rect.left  /TILESETSIZE_X;				// Links
-                tr = Rect.right /TILESETSIZE_X;				// Rechts
-                to = Rect.top   /TILESETSIZE_Y;				// Oben
-                tu = Rect.bottom/TILESETSIZE_Y;				// Unten
+                tl = TKL(Rect.left);			    	// Links
+                tr = TKR(Rect.right);		    		// Rechts
+                to = TKO(Rect.top);	        			// Oben
+                tu = TKU(Rect.bottom);		    		// Unten
 
                 //al = TileAt(xLevel+i, yLevel+j).Alpha;
 
@@ -1684,15 +1679,10 @@ void TileEngineClass::DrawOverlayLevel(void)
                     TileAt(i+xLevel, j+yLevel).Block & BLOCKWERT_MOVEVERTICAL)
             {
                 // Screen-Koordinaten der Vertices
-                l = xScreen   ;						// Links
-                o = yScreen   ;						// Oben
-                r = xScreen+TILESIZE_X - 1;						// Rechts
-                u = yScreen+TILESIZE_Y - 1;						// Unten
-
-                l -= POS_COORD_OFFSET;
-                r += POS_COORD_OFFSET;
-                o -= POS_COORD_OFFSET;
-                u += POS_COORD_OFFSET;
+                l = SKL(xScreen);						// Links
+                o = SKO(yScreen);						// Oben
+                r = SKR(xScreen);               		// Rechts
+                u = SKU(yScreen);		            	// Unten
                 /*
                 				// Wasserfall
                 				//
@@ -1773,10 +1763,10 @@ void TileEngineClass::DrawOverlayLevel(void)
                     Rect = TileRects[Type];
 
                     // Textur-Koordinaten
-                    tl = Rect.left  /TILESETSIZE_X;				// Links
-                    tr = Rect.right /TILESETSIZE_X;				// Rechts
-                    to = Rect.top   /TILESETSIZE_Y;				// Oben
-                    tu = Rect.bottom/TILESETSIZE_Y;				// Unten
+                    tl = TKL(Rect.left);			    	// Links
+                    tr = TKR(Rect.right);		    		// Rechts
+                    to = TKO(Rect.top);	        			// Oben
+                    tu = TKU(Rect.bottom);		    		// Unten
 
                     // bewegtes Tile vertikal
                     if (TileAt(i+xLevel, j+yLevel).Block & BLOCKWERT_MOVEVERTICAL)
@@ -1899,15 +1889,10 @@ void TileEngineClass::DrawWater(void)
                 if (TileAt(i+xLevel, j+yLevel).Block & BLOCKWERT_LIQUID)
                 {
                     // Screen-Koordinaten der Vertices
-                    l = xScreen   ;						// Links
-                    o = yScreen   ;						// Oben
-                    r = xScreen+TILESIZE_X - 1;						// Rechts
-                    u = yScreen+TILESIZE_Y - 1;						// Unten
-
-                    l -= POS_COORD_OFFSET;
-                    r += POS_COORD_OFFSET;
-                    o -= POS_COORD_OFFSET;
-                    u += POS_COORD_OFFSET;
+                    l = SKL(xScreen);						// Links
+                    o = SKO(yScreen);						// Oben
+                    r = SKR(xScreen);   	            	// Rechts
+                    u = SKU(yScreen);		            	// Unten
 
                     //DKS - Original code was setting texture coordinates when no texture 
                     //      is bound.. disabled the code:
@@ -1984,15 +1969,10 @@ void TileEngineClass::DrawWater(void)
                     if (TileAt(i+xLevel, j+yLevel).Block & BLOCKWERT_LIQUID)
                     {
                         // Screen-Koordinaten der Vertices
-                        l = xScreen   ;						// Links
-                        o = yScreen   ;						// Oben
-                        r = xScreen+TILESIZE_X - 1;						// Rechts
-                        u = yScreen+TILESIZE_Y - 1;						// Unten
-
-                        l -= POS_COORD_OFFSET;
-                        r += POS_COORD_OFFSET;
-                        o -= POS_COORD_OFFSET;
-                        u += POS_COORD_OFFSET;
+                        l = SKL(xScreen);						// Links
+                        o = SKO(yScreen);						// Oben
+                        r = SKR(xScreen);   	            	// Rechts
+                        u = SKU(yScreen);		            	// Unten
 
                         // Vertices definieren
                         v1.x = l;						// Links oben
