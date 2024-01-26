@@ -521,10 +521,10 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
     //tr = itsRect.right /itsXSize;	// Rechts
     //to = itsRect.top   /itsYSize;	// Oben
     //tu = itsRect.bottom/itsYSize;	// Unten
-    tl = itsRect.left    * itsXTexScale;	// Links
-    tr = itsRect.right   * itsXTexScale;	// Rechts
-    to = itsRect.top     * itsYTexScale;	// Oben
-    tu = itsRect.bottom  * itsYTexScale;	// Unten
+    tl = (itsRect.left + POS_COORD_OFFSET) * itsXTexScale;	// Links
+    tr = (itsRect.right + POS_COORD_OFFSET) * itsXTexScale;	// Rechts
+    to = (itsRect.top - POS_COORD_OFFSET) * itsYTexScale;	// Oben
+    tu = (itsRect.bottom - POS_COORD_OFFSET) * itsYTexScale;	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
