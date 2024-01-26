@@ -42,6 +42,11 @@
 #include "unrarlib.h"
 #endif
 
+#define STKL(X) (((X) + POS_COORD_OFFSET) * itsXTexScale)
+#define STKR(X) (((X) - POS_COORD_OFFSET) * itsXTexScale)
+#define STKO(Y) (((Y) + POS_COORD_OFFSET) * itsYTexScale)
+#define STKU(Y) (((Y) - POS_COORD_OFFSET) * itsYTexScale)
+
 extern bool					GameRunning;				// Läuft das Spiel noch ?
 
 // --------------------------------------------------------------------------------------
@@ -506,9 +511,9 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
     //y = float (int (y));
 
     l = x;									// Links
-    r = x+(itsRect.right-itsRect.left-1);	// Rechts
+    r = x+(itsRect.right-itsRect.left);	// Rechts
     o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
+    u = y+(itsRect.bottom-itsRect.top);	// Unten
 
     l -= POS_COORD_OFFSET;
     r += POS_COORD_OFFSET;
@@ -521,10 +526,10 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
     //tr = itsRect.right /itsXSize;	// Rechts
     //to = itsRect.top   /itsYSize;	// Oben
     //tu = itsRect.bottom/itsYSize;	// Unten
-    tl = (itsRect.left + POS_COORD_OFFSET) * itsXTexScale;	// Links
-    tr = (itsRect.right + POS_COORD_OFFSET) * itsXTexScale;	// Rechts
-    to = (itsRect.top - POS_COORD_OFFSET) * itsYTexScale;	// Oben
-    tu = (itsRect.bottom - POS_COORD_OFFSET) * itsYTexScale;	// Unten
+    tl = STKL(itsRect.left);	// Links
+    tr = STKR(itsRect.right);	// Rechts
+    to = STKO(itsRect.top);	    // Oben
+    tu = STKU(itsRect.bottom);	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
@@ -586,10 +591,10 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
     o -= POS_COORD_OFFSET;
     u += POS_COORD_OFFSET;
 
-    tl = itsRect.left    * itsXTexScale;	// Links
-    tr = itsRect.right   * itsXTexScale;	// Rechts
-    to = itsRect.top     * itsYTexScale;	// Oben
-    tu = itsRect.bottom  * itsYTexScale;	// Unten
+    tl = STKL(itsRect.left);	// Links
+    tr = STKR(itsRect.right);	// Rechts
+    to = STKO(itsRect.top);	    // Oben
+    tu = STKU(itsRect.bottom);	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
@@ -657,10 +662,10 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
         r = x-0.5f;
     }
 
-    tl = itsRect.left    * itsXTexScale;	// Links
-    tr = itsRect.right   * itsXTexScale;	// Rechts
-    to = itsRect.top     * itsYTexScale;	// Oben
-    tu = itsRect.bottom  * itsYTexScale;	// Unten
+    tl = STKL(itsRect.left);	// Links
+    tr = STKR(itsRect.right);	// Rechts
+    to = STKO(itsRect.top);	    // Oben
+    tu = STKU(itsRect.bottom);	// Unten
 
     //tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
 
@@ -717,10 +722,10 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     o -= POS_COORD_OFFSET;
     u += POS_COORD_OFFSET;
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = STKL(itsRect.left);	// Links
+    tr = STKR(itsRect.right);	// Rechts
+    to = STKO(itsRect.top);	    // Oben
+    tu = STKU(itsRect.bottom);	// Unten
 
     //DKS - Was already commented out in original code:
     //tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
@@ -774,10 +779,10 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     o -= POS_COORD_OFFSET;
     u += POS_COORD_OFFSET;
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = STKL(itsRect.left);	// Links
+    tr = STKR(itsRect.right);	// Rechts
+    to = STKO(itsRect.top);	    // Oben
+    tu = STKU(itsRect.bottom);	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
@@ -832,10 +837,10 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     o -= POS_COORD_OFFSET;
     u += POS_COORD_OFFSET;
 
-    tl = ((Anim%itsXFrameCount) * itsXFrameSize)                 * itsXTexScale; // Links
-    tr = ((Anim%itsXFrameCount) * itsXFrameSize + itsXFrameSize) * itsXTexScale; // Rechts
-    to = ((Anim/itsXFrameCount) * itsYFrameSize)                 * itsYTexScale; // Oben
-    tu = ((Anim/itsXFrameCount) * itsYFrameSize + itsYFrameSize) * itsYTexScale; // Unten
+    tl = STKL((Anim%itsXFrameCount) * itsXFrameSize);	// Links
+    tr = STKR((Anim%itsXFrameCount) * itsXFrameSize + itsXFrameSize);	// Rechts
+    to = STKO((Anim/itsXFrameCount) * itsYFrameSize);	    // Oben
+    tu = STKU((Anim/itsXFrameCount) * itsYFrameSize + itsYFrameSize);	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
@@ -890,10 +895,10 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     o -= POS_COORD_OFFSET;
     u += POS_COORD_OFFSET;
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = STKL(itsRect.left);	// Links
+    tr = STKR(itsRect.right);	// Rechts
+    to = STKO(itsRect.top);	    // Oben
+    tu = STKU(itsRect.bottom);	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
@@ -1012,10 +1017,10 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten    //DKS
 	u = y+(height-1)+0.5f;	// Unten
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = STKL(itsRect.left);	// Links
+    tr = STKR(itsRect.right);	// Rechts
+    to = STKO(itsRect.top);	    // Oben
+    tu = STKU(itsRect.bottom);	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
@@ -1128,10 +1133,10 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
     //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
 	u = y+(height-1)+0.5f;	// Unten
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = STKL(itsRect.left);	// Links
+    tr = STKR(itsRect.right);	// Rechts
+    to = STKO(itsRect.top);	    // Oben
+    tu = STKU(itsRect.bottom);	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
@@ -1230,10 +1235,10 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
     o -= POS_COORD_OFFSET;
     u += POS_COORD_OFFSET;
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = STKL(itsRect.left);	// Links
+    tr = STKR(itsRect.right);	// Rechts
+    to = STKO(itsRect.top);	    // Oben
+    tu = STKU(itsRect.bottom);	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 

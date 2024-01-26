@@ -39,12 +39,12 @@
 
 #define SKL(X) ((X) - POS_COORD_OFFSET)
 #define SKO(X) ((X) - POS_COORD_OFFSET)
-#define SKR(X) ((X) + TILESIZE_X - 1 + POS_COORD_OFFSET)
-#define SKU(Y) ((Y) + TILESIZE_Y - 1 + POS_COORD_OFFSET)
+#define SKR(X) ((X) + TILESIZE_X + POS_COORD_OFFSET)
+#define SKU(Y) ((Y) + TILESIZE_Y + POS_COORD_OFFSET)
 
 #define TKL(X) (((X) + POS_COORD_OFFSET) * (1.0f / TILESETSIZE_X))
-#define TKR(X) (((X) + POS_COORD_OFFSET) * (1.0f / TILESETSIZE_X))
-#define TKO(Y) (((Y) - POS_COORD_OFFSET) * (1.0f / TILESETSIZE_Y))
+#define TKR(X) (((X) - POS_COORD_OFFSET) * (1.0f / TILESETSIZE_X))
+#define TKO(Y) (((Y) + POS_COORD_OFFSET) * (1.0f / TILESETSIZE_Y))
 #define TKU(Y) (((Y) - POS_COORD_OFFSET) * (1.0f / TILESETSIZE_Y))
 
 // --------------------------------------------------------------------------------------
@@ -1679,15 +1679,10 @@ void TileEngineClass::DrawOverlayLevel(void)
                     TileAt(i+xLevel, j+yLevel).Block & BLOCKWERT_MOVEVERTICAL)
             {
                 // Screen-Koordinaten der Vertices
-                l = xScreen   ;						// Links
-                o = yScreen   ;						// Oben
-                r = xScreen+TILESIZE_X - 1;						// Rechts
-                u = yScreen+TILESIZE_Y - 1;						// Unten
-
-                l -= POS_COORD_OFFSET;
-                r += POS_COORD_OFFSET;
-                o -= POS_COORD_OFFSET;
-                u += POS_COORD_OFFSET;
+                l = SKL(xScreen);						// Links
+                o = SKO(yScreen);						// Oben
+                r = SKR(xScreen);               		// Rechts
+                u = SKU(yScreen);		            	// Unten
                 /*
                 				// Wasserfall
                 				//
