@@ -42,6 +42,11 @@
 #include "unrarlib.h"
 #endif
 
+#define SKL(X) (((X) - POS_COORD_OFFSET))
+#define SKR(X,W) (((X) + (W) + POS_COORD_OFFSET))
+#define SKO(Y) (((Y) - POS_COORD_OFFSET))
+#define SKU(Y,H) (((Y) + (H) + POS_COORD_OFFSET))
+
 #define STKL(X) (((X) + POS_COORD_OFFSET) * itsXTexScale)
 #define STKR(X) (((X) - POS_COORD_OFFSET) * itsXTexScale)
 #define STKO(Y) (((Y) + POS_COORD_OFFSET) * itsYTexScale)
@@ -506,26 +511,11 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    //DKS - unnecessary:
-    //x = float (int (x));
-    //y = float (int (y));
+    l = SKL(x);			                    // Links
+    r = SKR(x, itsRect.right-itsRect.left);	// Rechts
+    o = SKO(y);	                    		// Oben
+    u = SKU(y, itsRect.bottom-itsRect.top);	// Unten
 
-    l = x;									// Links
-    r = x+(itsRect.right-itsRect.left);	// Rechts
-    o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top);	// Unten
-
-    l -= POS_COORD_OFFSET;
-    r += POS_COORD_OFFSET;
-    o -= POS_COORD_OFFSET;
-    u += POS_COORD_OFFSET;
-
-    //DKS - Converted this and all other sprite-rendering functions to use new itsXTexScale
-    //      and itsYTexScale texture-coordinate-conversion factors like so:
-    //tl = itsRect.left  /itsXSize;	// Links
-    //tr = itsRect.right /itsXSize;	// Rechts
-    //to = itsRect.top   /itsYSize;	// Oben
-    //tu = itsRect.bottom/itsYSize;	// Unten
     tl = STKL(itsRect.left);	// Links
     tr = STKR(itsRect.right);	// Rechts
     to = STKO(itsRect.top);	    // Oben
@@ -581,15 +571,10 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
     if (Anim > -1)
         itsRect = itsPreCalcedRects [Anim];
 
-    l = x;									// Links
-    r = x+(itsRect.right-itsRect.left-1);	// Rechts
-    o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
-
-    l -= POS_COORD_OFFSET;
-    r += POS_COORD_OFFSET;
-    o -= POS_COORD_OFFSET;
-    u += POS_COORD_OFFSET;
+    l = SKL(x);			                    // Links
+    r = SKR(x, itsRect.right-itsRect.left);	// Rechts
+    o = SKO(y);	                    		// Oben
+    u = SKU(y, itsRect.bottom-itsRect.top);	// Unten
 
     tl = STKL(itsRect.left);	// Links
     tr = STKR(itsRect.right);	// Rechts
@@ -636,30 +621,26 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    //DKS - unnecessary:
-    //x = float (int (x));
-    //y = float (int (y));
-
     if (v == false)
     {
-        o = y-0.5f;									// Unten
-        u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Oben
+        o = SKO(y);								// Unten
+        u = SKU(y, itsRect.bottom-itsRect.top);	// Oben
     }
     else
     {
-        u = y-0.5f;									// Unten
-        o = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Oben
+        u = SKO(y);								// Unten
+        o = SKU(y, itsRect.bottom-itsRect.top);	// Oben
     }
 
     if (h == false)
     {
-        r = x+(itsRect.right-itsRect.left-1)+0.5f;
-        l = x-0.5f;
+        r = SKR(x, itsRect.right-itsRect.left);
+        l = SKL(x);
     }
     else
     {
-        l = x+(itsRect.right-itsRect.left-1)+0.5f;
-        r = x-0.5f;
+        l = SKR(x, itsRect.right-itsRect.left);
+        r = SKL(x);
     }
 
     tl = STKL(itsRect.left);	// Links
@@ -708,19 +689,10 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    //DKS - unnecessary:
-    //x = float (int (x));
-    //y = float (int (y));
-
-    r = x;									// Links
-    l = x+(itsRect.right-itsRect.left-1);	// Rechts
-    o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
-
-    l += POS_COORD_OFFSET;
-    r -= POS_COORD_OFFSET;
-    o -= POS_COORD_OFFSET;
-    u += POS_COORD_OFFSET;
+    r = SKL(x);			                    // Rechts
+    l = SKR(x, itsRect.right-itsRect.left);	// Links
+    o = SKO(y);	                    		// Oben
+    u = SKU(y, itsRect.bottom-itsRect.top);	// Unten
 
     tl = STKL(itsRect.left);	// Links
     tr = STKR(itsRect.right);	// Rechts
@@ -769,15 +741,10 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    l = x;			// Links
-    r = x+width;	// Rechts
-    o = y;			// Oben
-    u = y+height;	// Unten
-
-    l -= POS_COORD_OFFSET;
-    r += POS_COORD_OFFSET;
-    o -= POS_COORD_OFFSET;
-    u += POS_COORD_OFFSET;
+    l = SKL(x);			// Links
+    r = SKR(x, width);	// Rechts
+    o = SKO(y);	        // Oben
+    u = SKU(y, height);	// Unten
 
     tl = STKL(itsRect.left);	// Links
     tr = STKR(itsRect.right);	// Rechts
@@ -827,15 +794,10 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    l = x;			// Links
-    r = x+width;	// Rechts
-    o = y;			// Oben
-    u = y+height;	// Unten
-
-    l -= POS_COORD_OFFSET;
-    r += POS_COORD_OFFSET;
-    o -= POS_COORD_OFFSET;
-    u += POS_COORD_OFFSET;
+    l = SKL(x);			// Links
+    r = SKR(x, width);	// Rechts
+    o = SKO(y);	        // Oben
+    u = SKU(y, height);	// Unten
 
     tl = STKL((Anim%itsXFrameCount) * itsXFrameSize);	// Links
     tr = STKR((Anim%itsXFrameCount) * itsXFrameSize + itsXFrameSize);	// Rechts
@@ -885,10 +847,10 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    l = x;									// Links
-    r = x+(itsRect.right-itsRect.left-1);	// Rechts
-    o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
+    l = SKL(x);		                    	// Links
+    r = SKR(x, itsRect.right-itsRect.left);	// Rechts
+    o = SKO(y);	                            // Oben
+    u = SKU(y, itsRect.bottom-itsRect.top);	// Unten
 
     l -= POS_COORD_OFFSET;
     r += POS_COORD_OFFSET;
@@ -997,25 +959,21 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     //
     if (mirror == false)
     {
-        l = x-0.5f;									// Links
-        //r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts   //DKS
-		r = x+(width-1)+0.5f;	// Rechts
+        l = SKL(x);			// Links
+		r = SKR(x, width);	// Rechts
 
         Winkel = 360 - Winkel;
     }
-
     // oder gespiegelt
     //
     else
     {
-        r = x+0.5f;									// Links
-        //l = x+(itsRect.right-itsRect.left-1)-0.5f;	// Rechts   //DKS
-		l = x+(width-1)-0.5f;	// Rechts
+        r = SKL(x);			// Links
+		l = SKR(x, width);	// Rechts
     }
 
-    o = y-0.5f;									// Oben
-    //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten    //DKS
-	u = y+(height-1)+0.5f;	// Unten
+    o = SKO(y);			// Oben
+	u = SKU(y, height);	// Unten
 
     tl = STKL(itsRect.left);	// Links
     tr = STKR(itsRect.right);	// Rechts
@@ -1113,9 +1071,8 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
     float height = itsRect.bottom - itsRect.top;
     float width = itsRect.right - itsRect.left;
 
-    l = x-0.5f;									// Links
-    //r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts       //DKS
-	r = x+(width-1)+0.5f;	// Rechts
+    l = SKL(x);			// Links
+	r = SKR(x, width);	// Rechts
 
     if (mirrored)
     {
@@ -1129,9 +1086,8 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 
     Winkel = 360 - Winkel;
 
-    o = y-0.5f;									// Oben
-    //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
-	u = y+(height-1)+0.5f;	// Unten
+    o = SKO(y);			// Oben
+	u = SKU(y, height);	// Unten
 
     tl = STKL(itsRect.left);	// Links
     tr = STKR(itsRect.right);	// Rechts
@@ -1225,15 +1181,10 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    l = x;			// Links
-    r = x+width;	// Rechts
-    o = y;			// Oben
-    u = y+height;	// Unten
-
-    l -= POS_COORD_OFFSET;
-    r += POS_COORD_OFFSET;
-    o -= POS_COORD_OFFSET;
-    u += POS_COORD_OFFSET;
+    l = SKL(x);			// Links
+    r = SKR(x, width);	// Rechts
+    o = SKO(y);			// Oben
+    u = SKU(y, height);	// Unten
 
     tl = STKL(itsRect.left);	// Links
     tr = STKR(itsRect.right);	// Rechts
@@ -1334,15 +1285,10 @@ void RenderRect4(float x, float y, float width, float height,
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
 
-    l = x;			// Links
-    r = x+width - 1;	// Rechts
-    o = y;			// Oben
-    u = y+height - 1;	// Unten
-
-    l -= POS_COORD_OFFSET;
-    r += POS_COORD_OFFSET;
-    o -= POS_COORD_OFFSET;
-    u += POS_COORD_OFFSET;
+    l = SKL(x);			// Links
+    r = SKR(x, width);	// Rechts
+    o = SKO(y);			// Oben
+    u = SKU(y, height);	// Unten
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
