@@ -1,4 +1,4 @@
-# Prologue
+# Prologue by Fruit-Bat
 This is a wonderful game, and I wanted to play it on my Pi 5.
 
 I forked this project to try and fix some rendering artefacts, in particular gaps in the landscape and a bar down the right-hand side of the screen.
@@ -17,7 +17,7 @@ Have fun,
 
 --- Fruit-Bat ---
 
-# Readme
+# Readme by Poke53280
 
 Hi guys,
 
