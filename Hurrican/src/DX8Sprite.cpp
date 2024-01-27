@@ -43,9 +43,9 @@
 #endif
 
 #define SKL(X) (((X) - POS_COORD_OFFSET))
-#define SKR(X,W) (((X) + (W) + POS_COORD_OFFSET))
+#define SKR(X,W) (((X) + (W) - POS_COORD_OFFSET))
 #define SKO(Y) (((Y) - POS_COORD_OFFSET))
-#define SKU(Y,H) (((Y) + (H) + POS_COORD_OFFSET))
+#define SKU(Y,H) (((Y) + (H) - POS_COORD_OFFSET))
 
 #define STKL(X) (((X) + POS_COORD_OFFSET) * itsXTexScale)
 #define STKR(X) (((X) - POS_COORD_OFFSET) * itsXTexScale)
