@@ -17,7 +17,7 @@ I forked it to try and fix some rendering artefacts, in particular gaps in the l
 	</tr>	
 </table>
 
-Note that. there is also a version [here](https://github.com/HurricanGame/Hurrican/), which may be more up-to-date. 
+Note that. there is also a version [here](https://github.com/fruit-bat/HurricanGame), which may be more up-to-date. 
 
 ## Build instructions
 ```
@@ -26,7 +26,7 @@ git clone https://github.com/fruit-bat/Hurrican
 cd Hurrican/Hurrican/src
 make TARGET=linux_GL2
 cd ..
-./hurricanlinux
+./hurricanlinux -NV
 ```
 
 Have fun,
