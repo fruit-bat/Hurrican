@@ -852,11 +852,6 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     o = SKO(y);	                            // Oben
     u = SKU(y, itsRect.bottom-itsRect.top);	// Unten
 
-    l -= POS_COORD_OFFSET;
-    r += POS_COORD_OFFSET;
-    o -= POS_COORD_OFFSET;
-    u += POS_COORD_OFFSET;
-
     tl = STKL(itsRect.left);	// Links
     tr = STKR(itsRect.right);	// Rechts
     to = STKO(itsRect.top);	    // Oben
