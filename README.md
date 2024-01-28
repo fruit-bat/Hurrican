@@ -17,6 +17,7 @@ I forked it to try and fix some rendering artefacts, in particular gaps in the l
 	</tr>	
 </table>
 
+Note that. there is also a version [here](https://github.com/HurricanGame/Hurrican/), which may be more up-to-date. 
 
 ## Build instructions
 ```
